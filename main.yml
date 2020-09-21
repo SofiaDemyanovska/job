@@ -1,0 +1,54 @@
+---
+- name: Create several users on server
+  hosts: all
+  become: yes
+
+  vars:
+    user_name: maria
+
+  tasks:
+  - name: Include vars
+    include_vars:
+      dir: vars
+
+  - name: Add the user 'john' with a primary group of 'users'
+    user:
+      name: john
+      comment: John
+      groups: users
+
+  - name: Add the user 'maria' with a primary group of 'users'
+    user:
+      name: "{{ user_name }}"
+      groups: users
+
+  - name: add several users
+    user:
+      name: "{{ item }}"
+      state: present
+      groups: "wheel"
+    loop:
+       - kate
+       - ben
+
+  - name: add several users
+    user:
+      name: "{{ item.name }}"
+      state: present
+      groups: "{{ item.groups }}"
+    with_items:
+      - { name: 'olya', groups: 'root' }
+      - { name: 'ihor', groups: 'root' }
+
+  - name: Add the user with secret password
+    user: 
+      name: angelina 
+      password: "{{ vault_pass }}"
+      groups: users
+
+  - name: Remove the user 'john'
+    user:
+      name: john
+      state: absent
+      remove: yes
+
