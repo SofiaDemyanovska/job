@@ -5,7 +5,7 @@ To reproduce correct ansible playbook`s work you need to follow these steps:
 > ssh-copy-id -i ~/.ssh/mykey user@host
 3. Add to hosts file your server IP, username, and the path to the key
 4. For one user we create a secret password and you need to put your value into the file
-> nano vars/vault.yml
+> nano vars/vault.yml<br/>
 > vault_pass: [replace this with your value]
 5. To encrypt your file run:
 > ansible-vault encrypt vars/vault.yml
@@ -14,6 +14,6 @@ To reproduce correct ansible playbook`s work you need to follow these steps:
 
 ## Note: 
 Sometimes you need to add your key to ssh-agent, so run this:
-> eval $(ssh-agent -s)
+> eval $(ssh-agent -s)<br/>
 > ssh-add mykey
 
